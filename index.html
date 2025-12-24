@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คิดถึง 🤍</title>
+
+<style>
+body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(135deg,#f6c1e8,#d9b3ff);
+    font-family:sans-serif;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* การ์ด */
+.card{
+    background:rgba(255,255,255,.95);
+    width:90%;
+    max-width:360px;
+    padding:22px;
+    border-radius:26px;
+    text-align:center;
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
+    100%{transform:translateY(0)}
+}
+
+h1{
+    color:#d63384;
+    margin-bottom:12px;
+}
+
+img{
+    width:100%;
+    max-height:300px;
+    object-fit:cover;
+    border-radius:20px;
+    margin:12px 0 16px 0;
+}
+
+p{
+    font-size:15px;
+    line-height:1.9;
+    color:#444;
+}
+
+/* ปุ่ม */
+#playBtn{
+    margin-top:14px;
+    padding:10px 20px;
+    border:none;
+    border-radius:22px;
+    background:#d63384;
+    color:white;
+    font-size:14px;
+}
+
+/* ซ่อนวิดีโอ */
+#player{
+    width:0;
+    height:0;
+    overflow:hidden;
+}
+
+/* หัวใจลอย */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:22px;
+    animation:rise linear forwards;
+    opacity:.8;
+}
+
+@keyframes rise{
+    from{transform:translateY(0)}
+    to{transform:translateY(-120vh)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>คิดถึงนะ 🤍</h1>
+
+    <!-- รูปเดียว -->
+    <img src="img.jpg" alt="คิดถึง">
+
+    <p>
+        เติ้ลคิดถึงพีตลอดเวลาเลยนะ 
+        รักมากนะค้าบ 
+    </p>
+
+    <p>
+        คิดถึง อยากกอด  
+         🤍
+    </p>
+
+    <button id="playBtn" onclick="playMusic()">อยากจังเลย</button>
+</div>
+
+<!-- YouTube Player (ซ่อนไว้) -->
+<div id="player"></div>
+
+<script>
+// โหลด YouTube API
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
+let player;
+let started = false;
+
+function onYouTubeIframeAPIReady(){
+    player = new YT.Player('player', {
+        videoId: '2Vv-BfVoq4g', 
+        // ↑ เพลงคิดถึง (Ed Sheeran - Perfect Instrumental)
+        playerVars:{
+            autoplay:0,
+            loop:1,
+            playlist:'2Vv-BfVoq4g',
+            controls:0
+        }
+    });
+}
+
+function playMusic(){
+    if(started) return;
+    started = true;
+    player.playVideo();
+    document.getElementById("playBtn").innerText = "🎵 กำลังเล่น...";
+}
+
+/* หัวใจลอย */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML = Math.random() > 0.5 ? "💗" : "💜";
+    h.style.left = Math.random()*100 + "vw";
+    h.style.animationDuration = (4 + Math.random()*3) + "s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),8000);
+}, 420);
+</script>
+
+</body>
+</html>
